@@ -14,9 +14,8 @@ public class MWSearchPageObject extends SearchPageObject {
         SEARCH_RESULT_ELEMENT = "css:ul.page-list>li.page-summary";
         SEARCH_EMPTY_RESULT_ELEMENT = "css:p.without-results";
         SKIP_ELEMENT = "css:#cn-toggle-box";
-        //SEARCH_FROM_ARTICLE_BUTTON = "xpath://XCUIElementTypeButton[@name='Search Wikipedia']";
-        //SEARCH_RESULTS_LIST = "xpath://XCUIElementTypeCollectionView";
-        //SEARCH_RESULT_BY_ORDER_NUMBER_TPL = "xpath://XCUIElementTypeCollectionView/XCUIElementTypeCell[{NUMBER}]//XCUIElementTypeStaticText[1]";
+        SEARCH_RESULTS_LIST = "css:ul.page-list li";
+        SEARCH_RESULT_BY_ORDER_NUMBER_TPL = "xpath://div[@class = 'results']//ul/li[1]//h3";
     }
 
     public MWSearchPageObject(RemoteWebDriver driver) {

@@ -70,6 +70,9 @@ public class MainPageObject {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
         wait.withMessage(error_message + "\n");
+        if (Platform.getInstance().isMW()) {
+            return wait.until(ExpectedConditions.textToBe(by,  expected_value));
+        }
         return wait.until(ExpectedConditions.attributeContains(by, "name", expected_value));
     }
 
