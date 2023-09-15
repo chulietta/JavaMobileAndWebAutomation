@@ -1,8 +1,6 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -57,7 +55,7 @@ abstract public class ArticlePageObject extends MainPageObject {
                     "Cannot find end of the article",
                     60
             );
-        } else if (Platform.getInstance().isIOS()){
+        } else if (Platform.getInstance().isIOS()) {
             this.swipeUpTillElementAppear(
                     FOOTER_ELEMENT,
                     "Cannot find end of the article",
@@ -96,10 +94,20 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
-    public void addArticlesToMySaved() {
-        if (Platform.getInstance().isMW()) {
-            this.removeArticleFromMyListIfItAdded();
-        }
+    public void addArticleToMySaved() {
+        this.waitForElementAndClick(
+                SAVE_TO_MY_LIST_BUTTON,
+                "Cannot find button to save article",
+                15
+        );
+    }
+
+    public void addArticleToMySavedList() {
+        this.waitForElementPresent(
+                SAVE_TO_MY_LIST_BUTTON,
+                "Cannot find button to save article",
+                15
+        );
         this.waitForElementAndClick(
                 SAVE_TO_MY_LIST_BUTTON,
                 "Cannot find button to save article",

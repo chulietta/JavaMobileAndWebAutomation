@@ -77,7 +77,7 @@ public class HomeworkTest extends CoreTestCase {
         if (Platform.getInstance().isAndroid()) {
             articlePageObject.addArticleToMyList(name_of_folder);
         } else {
-            articlePageObject.addArticlesToMySaved();
+            articlePageObject.addArticleToMySaved();
         }
 
         searchPageObject.clickSearchInput();
@@ -89,7 +89,7 @@ public class HomeworkTest extends CoreTestCase {
             articlePageObject.addArticleToExistingList(name_of_folder);
             navigationUI.clickMyList();
         } else {
-            articlePageObject.addArticlesToMySaved();
+            articlePageObject.addArticleToMySaved();
             articlePageObject.closeArticle();
             navigationUI.clickMyList();
             myListsPageObject.closeSyncPopup();

@@ -1,8 +1,6 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class SearchPageObject extends MainPageObject {
@@ -56,11 +54,7 @@ abstract public class SearchPageObject extends MainPageObject {
     }
 
     public void initSearchInput() {
-        if (Platform.getInstance().isIOS()) {
-            this.waitForElementAndClick(SKIP_ELEMENT, "Cannot find Skip button", 10);
-        } else if (Platform.getInstance().isAndroid()) {
-            this.waitForElementAndClick(SKIP_ELEMENT, "Cannot find Skip button", 10);
-        }
+        this.waitForElementAndClick(SKIP_ELEMENT, "Cannot find Skip button", 10);
         this.waitForElementAndClick(SEARCH_INIT_ELEMENT, "Cannot find Search Wikipedia input", 15);
     }
 

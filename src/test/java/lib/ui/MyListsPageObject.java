@@ -10,7 +10,8 @@ abstract public class MyListsPageObject extends MainPageObject {
             ARTICLE_BY_TITLE_TPL,
             CLOSE_SYNC_POPUP,
             SWIPE_ACTION_DELETE_BUTTON,
-            REMOVE_FROM_SAVED_BUTTON;
+            REMOVE_FROM_SAVED_BUTTON,
+            DELETING_FROM_LIST_MESSAGE;
 
     public MyListsPageObject(RemoteWebDriver driver) {
         super(driver);
@@ -59,13 +60,21 @@ abstract public class MyListsPageObject extends MainPageObject {
             }
         } else {
             String remove_locator = getRemoveButtonByTitle(article_title);
+            this.waitForElementPresent(
+                    remove_locator,
+                    "Cannot find button to remove article from saves",
+                    15
+            );
             this.waitForElementAndClick(
                     remove_locator,
                     "Cannot click button to remove article from saves",
-                    10
+                    15
             );
-        }
-        if (Platform.getInstance().isMW()) {
+            this.waitForElementNotPresent(
+                    DELETING_FROM_LIST_MESSAGE,
+                    "Deleting message still visible",
+                    15
+            );
             driver.navigate().refresh();
         }
 

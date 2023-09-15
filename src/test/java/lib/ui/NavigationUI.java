@@ -16,17 +16,18 @@ abstract public class NavigationUI extends MainPageObject {
 
     public void clickMyList() {
         if (Platform.getInstance().isMW()) {
-            this.tryClickElementsWithFewAttempts(
+            this.waitForElementAndClick(
                     MY_LIST_OPEN_LINK,
                     "Cannot find navigation to My list",
                     15
             );
+        } else {
+            this.waitForElementAndClick(
+                    MY_LIST_OPEN_LINK,
+                    "Cannot find navigation to My list",
+                    5
+            );
         }
-        this.waitForElementAndClick(
-                MY_LIST_OPEN_LINK,
-                "Cannot find navigation to My list",
-                5
-        );
     }
 
     public void openNavigation() {

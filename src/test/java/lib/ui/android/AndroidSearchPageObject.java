@@ -1,7 +1,6 @@
 package lib.ui.android;
 
 import lib.ui.SearchPageObject;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class AndroidSearchPageObject extends SearchPageObject {

@@ -7,6 +7,7 @@ public class MWMyListsPageObject extends MyListsPageObject {
     static {
         ARTICLE_BY_TITLE_TPL = "xpath://ul[contains(@class, 'page-list')]//h3[contains(text(), '{TITLE}')]";
         REMOVE_FROM_SAVED_BUTTON = "xpath://ul[contains(@class, 'page-list')]//h3[contains(text(), '{TITLE}')]/../../a[contains(@class, 'watched')]";
+        DELETING_FROM_LIST_MESSAGE = "css:div.mw-notification-content";
     }
 
     public MWMyListsPageObject(RemoteWebDriver driver) {

@@ -13,6 +13,7 @@ public class MWSearchPageObject extends SearchPageObject {
         //SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL = "xpath://XCUIElementTypeStaticText[contains(@name, '{TITLE}')]/following-sibling::*[contains(@name,'{DESCRIPTION}')]";
         SEARCH_RESULT_ELEMENT = "css:ul.page-list>li.page-summary";
         SEARCH_EMPTY_RESULT_ELEMENT = "css:p.without-results";
+        SKIP_ELEMENT = "css:#cn-toggle-box";
         //SEARCH_FROM_ARTICLE_BUTTON = "xpath://XCUIElementTypeButton[@name='Search Wikipedia']";
         //SEARCH_RESULTS_LIST = "xpath://XCUIElementTypeCollectionView";
         //SEARCH_RESULT_BY_ORDER_NUMBER_TPL = "xpath://XCUIElementTypeCollectionView/XCUIElementTypeCell[{NUMBER}]//XCUIElementTypeStaticText[1]";

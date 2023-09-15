@@ -2,6 +2,7 @@ package lib;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -83,7 +84,7 @@ public class Platform {
     private ChromeOptions getMWChromeOptions() {
         Map<String, Object> deviceMetrics = new HashMap<>();
         deviceMetrics.put("width", 393);
-        deviceMetrics.put("height", 851);
+        deviceMetrics.put("height", 900);
         deviceMetrics.put("pixelRatio", 3.0);
 
         Map<String, Object> mobileEmulation = new HashMap<>();
@@ -92,7 +93,7 @@ public class Platform {
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
-        chromeOptions.addArguments("window-size=393,851");
+        chromeOptions.addArguments("window-size=393,900");
         return chromeOptions;
     }
 

@@ -25,7 +25,7 @@ public class MyListsTest extends CoreTestCase {
 
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
-        searchPageObject.clickByArticleWithSubstring("bject-oriented programming language");
+        searchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
         articlePageObject.waitForTitleElement();
         String article_title = articlePageObject.getArticleTitle();
 
@@ -33,12 +33,12 @@ public class MyListsTest extends CoreTestCase {
             articlePageObject.addArticleToMyList(name_of_folder);
             navigationUI.clickMyList();
         } else if (Platform.getInstance().isIOS()) {
-            articlePageObject.addArticlesToMySaved();
+            articlePageObject.addArticleToMySaved();
             articlePageObject.closeArticle();
             navigationUI.clickMyList();
             myListsPageObject.closeSyncPopup();
         } else {
-            articlePageObject.addArticlesToMySaved();
+            articlePageObject.addArticleToMySavedList();
             auth.clickAuthButton();
             auth.enterLoginData(login, password);
             auth.submitForm();
