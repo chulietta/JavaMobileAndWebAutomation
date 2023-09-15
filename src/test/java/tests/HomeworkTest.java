@@ -2,10 +2,7 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.Platform;
-import lib.ui.ArticlePageObject;
-import lib.ui.MyListsPageObject;
-import lib.ui.NavigationUI;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import lib.ui.factories.ArticlePageObjectFactory;
 import lib.ui.factories.MyListPageObjectFactory;
 import lib.ui.factories.NavigationPageObjectFactory;
@@ -14,6 +11,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class HomeworkTest extends CoreTestCase {
+
+    private final static String login = "83yuliya83";
+    private final static String password = "!qazxsw@";
 
     @Test
     public void testCheckSearchInputPlaceholderText() {
@@ -67,33 +67,51 @@ public class HomeworkTest extends CoreTestCase {
         ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);
         MyListsPageObject myListsPageObject = MyListPageObjectFactory.get(driver);
         NavigationUI navigationUI = NavigationPageObjectFactory.get(driver);
+        AuthorizationPageObject auth = new AuthorizationPageObject(driver);
 
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("java");
         searchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
         articlePageObject.waitForTitleElement();
+        String article_title = articlePageObject.getArticleTitle();
 
         String name_of_folder = "Learning programming";
         if (Platform.getInstance().isAndroid()) {
             articlePageObject.addArticleToMyList(name_of_folder);
-        } else {
+        } else if (Platform.getInstance().isIOS()) {
             articlePageObject.addArticleToMySaved();
+        } else {
+            articlePageObject.addArticleToMySavedList();
+            auth.clickAuthButton();
+            auth.enterLoginData(login, password);
+            auth.submitForm();
+
+            articlePageObject.waitForTitleElement();
+            assertEquals(
+                    "We are not on the same page after login",
+                    article_title,
+                    articlePageObject.getArticleTitle());
         }
 
         searchPageObject.clickSearchInput();
         searchPageObject.typeSearchLine("appium");
-        searchPageObject.clickByArticleWithSubstring("Appium");
-        articlePageObject.waitForDescriptionElement();
+        searchPageObject.clickByArticleWithSubstring("Automation for Apps");
+        articlePageObject.waitForTitleElement();
 
         if (Platform.getInstance().isAndroid()) {
             articlePageObject.addArticleToExistingList(name_of_folder);
             navigationUI.clickMyList();
-        } else {
+        } else if (Platform.getInstance().isIOS()) {
             articlePageObject.addArticleToMySaved();
             articlePageObject.closeArticle();
             navigationUI.clickMyList();
             myListsPageObject.closeSyncPopup();
+        } else {
+            articlePageObject.addArticleToMySavedList();
+            navigationUI.openNavigation();
+            navigationUI.clickMyList();
         }
+
         String article_for_delete_title = "Java (programming language)";
         String article_title_not_deleted = "Appium";
         String article_description_not_deleted = "Automation for Apps";
@@ -101,13 +119,22 @@ public class HomeworkTest extends CoreTestCase {
         myListsPageObject.swipeByArticleToDelete(article_for_delete_title);
         myListsPageObject.waitForArticleToAppearByTitle(article_title_not_deleted);
         myListsPageObject.clickArticleTitleInMyList(article_title_not_deleted);
-        articlePageObject.waitForDescriptionElement();
-
-        String current_article_description = articlePageObject.getArticleDescription();
-        Assert.assertEquals(
-                "We see unexpected description!",
-                article_description_not_deleted,
-                current_article_description
-        );
+        if (Platform.getInstance().isMW()) {
+            articlePageObject.waitForTitleElement();
+            String current_article_title = articlePageObject.getArticleTitle();
+            Assert.assertEquals(
+                    "We see unexpected title!",
+                    article_title_not_deleted,
+                    current_article_title
+            );
+        } else {
+            articlePageObject.waitForDescriptionElement();
+            String current_article_description = articlePageObject.getArticleDescription();
+            Assert.assertEquals(
+                    "We see unexpected description!",
+                    article_description_not_deleted,
+                    current_article_description
+            );
+        }
     }
 }

@@ -16,7 +16,7 @@ abstract public class NavigationUI extends MainPageObject {
 
     public void clickMyList() {
         if (Platform.getInstance().isMW()) {
-            this.waitForElementAndClick(
+            this.tryClickElementsWithFewAttempts(
                     MY_LIST_OPEN_LINK,
                     "Cannot find navigation to My list",
                     15

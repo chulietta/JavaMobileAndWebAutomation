@@ -103,14 +103,10 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void addArticleToMySavedList() {
-        this.waitForElementPresent(
-                SAVE_TO_MY_LIST_BUTTON,
-                "Cannot find button to save article",
-                15
-        );
+        this.removeArticleFromMyListIfItAdded();
         this.waitForElementAndClick(
                 SAVE_TO_MY_LIST_BUTTON,
-                "Cannot find button to save article",
+                "Cannot click button to save article",
                 15
         );
     }
