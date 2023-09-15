@@ -3,6 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class SearchTests extends CoreTestCase {
@@ -36,7 +37,7 @@ public class SearchTests extends CoreTestCase {
         searchPageObject.typeSearchLine(search_line);
         int amount_of_search_results = searchPageObject.getAmountOfFoundedArticles();
 
-        assertTrue(
+        Assert.assertTrue(
                 "We found few results!",
                 amount_of_search_results > 0
         );

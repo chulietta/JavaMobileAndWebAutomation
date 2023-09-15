@@ -87,7 +87,7 @@ public class HomeworkTest extends CoreTestCase {
             auth.submitForm();
 
             articlePageObject.waitForTitleElement();
-            assertEquals(
+            Assert.assertEquals(
                     "We are not on the same page after login",
                     article_title,
                     articlePageObject.getArticleTitle());

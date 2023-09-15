@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -26,16 +27,20 @@ abstract public class ArticlePageObject extends MainPageObject {
         return MY_LIST_TITLE_TPL.replace("{TITLE}", title);
     }
 
+    @Step("Waiting for title on article page")
     public WebElement waitForTitleElement() {
         return this.waitForElementPresent(TITLE, "Cannot find article title", 20);
     }
 
+    @Step("Waiting for description on article page")
     public WebElement waitForDescriptionElement() {
         return this.waitForElementPresent(DESCRIPTION, "Cannot find article description", 20);
     }
 
+    @Step("Get article title")
     public String getArticleTitle() {
         WebElement title_element = waitForTitleElement();
+        screenshot(this.takeScreenshot("article_title"));
         if (Platform.getInstance().isMW()) {
             return title_element.getText();
         } else {
@@ -48,6 +53,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         return description_element.getAttribute("name");
     }
 
+    @Step("Swipe article to the footer")
     public void swipeToFooter() {
         if (Platform.getInstance().isAndroid()) {
             this.swipeUpToFindElement(
@@ -70,6 +76,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Add article to my list")
     public void addArticleToMyList(String name_of_folder) {
         this.waitForElementAndClick(
                 SAVE_TO_MY_LIST_BUTTON,
@@ -94,6 +101,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Add article to my list")
     public void addArticleToMySaved() {
         this.waitForElementAndClick(
                 SAVE_TO_MY_LIST_BUTTON,
@@ -102,6 +110,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Add article to my list")
     public void addArticleToMySavedList() {
         this.removeArticleFromMyListIfItAdded();
         this.waitForElementAndClick(
@@ -111,6 +120,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Remove article from my list")
     public void removeArticleFromMyListIfItAdded() {
         if (this.isElementPresent(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON)) {
             this.waitForElementAndClick(
@@ -126,6 +136,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Close article")
     public void closeArticle() {
         this.waitForElementAndClick(
                 HOME_LINK,
@@ -134,6 +145,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Add article to existing list")
     public void addArticleToExistingList(String name_of_folder) {
         String my_list_xpath = getMyListByTitle(name_of_folder);
         this.waitForElementAndClick(
@@ -153,6 +165,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Assert title is present")
     public void assertTitlePresent() {
         this.assertElementPresent(
                 TITLE,
