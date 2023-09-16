@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -25,6 +26,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         return REMOVE_FROM_SAVED_BUTTON.replace("{TITLE}", article_title);
     }
 
+    @Step("Make sure article with title '{article_title}' is present")
     public void waitForArticleToAppearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementPresent(
@@ -34,6 +36,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         );
     }
 
+    @Step("Make sure article with title '{article_title}' is not present")
     public void waitForArticleToDisappearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementNotPresent(
@@ -43,6 +46,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         );
     }
 
+    @Step("Swipe article for deleting from saved list")
     public void swipeByArticleToDelete(String article_title) {
         this.waitForArticleToAppearByTitle(article_title);
         String article_xpath = getSavedArticleXpathByTitle(article_title);
@@ -81,6 +85,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForArticleToDisappearByTitle(article_title);
     }
 
+    @Step("Click on article title in saved list")
     public void clickArticleTitleInMyList(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
         this.waitForElementAndClick(
@@ -90,6 +95,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         );
     }
 
+    @Step("Close popup")
     public void closeSyncPopup() {
         this.waitForElementAndClick(
                 CLOSE_SYNC_POPUP,

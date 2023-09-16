@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.*;
@@ -10,12 +12,18 @@ import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Epic("My homework")
 public class HomeworkTest extends CoreTestCase {
 
     private final static String login = "83yuliya83";
     private final static String password = "!qazxsw@";
 
     @Test
+    @Feature("Search")
+    @DisplayName("Check search line has placeholder")
+    @Description("We check search line placeholder text")
+    @Step("Starting test testCheckSearchInputPlaceholderText")
+    @Severity(value = SeverityLevel.TRIVIAL)
     public void testCheckSearchInputPlaceholderText() {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -25,6 +33,11 @@ public class HomeworkTest extends CoreTestCase {
 
     /* Ex3 */
     @Test
+    @Feature("Search")
+    @DisplayName("Check search results page content after cancel search")
+    @Description("We check result page is cleared after cancel search")
+    @Step("Starting test testSearchResultsAfterCancelSearch")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testSearchResultsAfterCancelSearch() {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -36,6 +49,11 @@ public class HomeworkTest extends CoreTestCase {
     }
 
     @Test
+    @Feature("Search")
+    @DisplayName("Check search results has searched word in title")
+    @Description("We check that search result has searched word in title")
+    @Step("Starting test testSearchResultsHasSearchedWord")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testSearchResultsHasSearchedWord() {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -49,6 +67,11 @@ public class HomeworkTest extends CoreTestCase {
 
     /* Ex6 */
     @Test
+    @Features(value = {@Feature(value = "Search"),@Feature(value = "Article")})
+    @DisplayName("Check article title is visible after article open")
+    @Description("We check article title is present after article open")
+    @Step("Starting test testSearchResultsHasSearchedWord")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testTitleOfArticleVisibleAfterOpen() {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);
@@ -62,6 +85,11 @@ public class HomeworkTest extends CoreTestCase {
 
     /* Ex5 */
     @Test
+    @Features(value = {@Feature(value = "Search"),@Feature(value = "Article"), @Feature(value = "Saved List")})
+    @DisplayName("Delete one article from my list and make sure that another article is in my list")
+    @Description("We add two articles in saved list, delete one of them and make sure, that another article is in saved list")
+    @Step("Starting test testCheckMyListAfterDeleteArticle")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testCheckMyListAfterDeleteArticle() {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);

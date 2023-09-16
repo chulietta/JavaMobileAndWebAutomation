@@ -6,6 +6,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -32,6 +33,7 @@ public class MainPageObject {
         this.driver = driver;
     }
 
+    @Step("Wait for element is present")
     public WebElement waitForElementPresent(String locator, String error_message, long timeInSeconds) {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
@@ -39,22 +41,26 @@ public class MainPageObject {
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+    @Step("Wait for element is present")
     public WebElement waitForElementPresent(String locator, String error_message) {
         return waitForElementPresent(locator, error_message, 10);
     }
 
+    @Step("Wait for element and click on it")
     public WebElement waitForElementAndClick(String locator, String error_message, long timeInSeconds) {
         WebElement element = waitForElementPresent(locator, error_message, timeInSeconds);
         element.click();
         return element;
     }
 
+    @Step("Wait for element and send keys")
     public WebElement waitForElementAndSendKeys(String locator, String value, String error_message, long timeInSeconds) {
         WebElement element = waitForElementPresent(locator, error_message, timeInSeconds);
         element.sendKeys(value);
         return element;
     }
 
+    @Step("Wait for element is not present")
     public boolean waitForElementNotPresent(String locator, String error_message, long timeInSeconds) {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
@@ -62,19 +68,25 @@ public class MainPageObject {
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
+    @Step("Wait for element and clear it")
     public WebElement waitForElementAndClear(String locator, String error_message, long timeInSeconds) {
         WebElement element = waitForElementPresent(locator, error_message, timeInSeconds);
         element.clear();
         return element;
     }
 
+    @Step("Make sure element has text '{expected_value}'")
     public boolean assertElementHasText(String locator, String expected_value, String error_message, long timeInSeconds) {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
         wait.withMessage(error_message + "\n");
+        if (Platform.getInstance().isMW()) {
+            return wait.until(ExpectedConditions.attributeContains(by, "placeholder", expected_value));
+        }
         return wait.until(ExpectedConditions.textToBe(by, expected_value));
     }
 
+    @Step("Make sure element contains text '{expected_value}'")
     public boolean assertElementContainsText(String locator, String expected_value, String error_message, long timeInSeconds) {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeInSeconds);
@@ -85,6 +97,7 @@ public class MainPageObject {
         return wait.until(ExpectedConditions.attributeContains(by, "name", expected_value));
     }
 
+    @Step("Swipe article up (works only for iOS and Android)")
     public void swipeUp(int timeOfSwipe) {
         if (driver instanceof AppiumDriver) {
             TouchAction action = new TouchAction((AppiumDriver) driver);
@@ -105,10 +118,12 @@ public class MainPageObject {
 
     }
 
+    @Step("Swipe article up quickly (works only for iOS and Android)")
     public void swipeUpQuick() {
         swipeUp(200);
     }
 
+    @Step("Swipe article till element not present (works only for iOS and Android)")
     public void swipeUpToFindElement(String locator, String error_message, int max_swipes) {
         By by = this.getLocatorByString(locator);
         int already_swipe = 0;
@@ -123,6 +138,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Scroll article up (works only for Mobile Web)")
     public void scrollWebPageUp() {
         if (Platform.getInstance().isMW()) {
             JavascriptExecutor JSExecutor = (JavascriptExecutor) driver;
@@ -132,6 +148,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Scroll article till element not present (works only for Mobile Web)")
     public void scrollWebPageTillElementNotVisible(String locator, String error_message, int max_swipes) {
         int already_swipe = 0;
         WebElement element = waitForElementPresent(locator, error_message);
@@ -144,6 +161,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Swipe article till element appear (works only for iOS and Android)")
     public void swipeUpTillElementAppear(String locator, String error_message, int max_swipes) {
         int already_swipe = 0;
         while (!this.isElementLocatedOnTheScreen(locator)) {
@@ -155,6 +173,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("make sure element is on the screen")
     public boolean isElementLocatedOnTheScreen(String locator) {
         int element_location_by_y = this.waitForElementPresent(locator, "Cannot find element by locator", 10).getLocation().getY();
         if (Platform.getInstance().isMW()) {
@@ -166,6 +185,7 @@ public class MainPageObject {
         return element_location_by_y < screen_size_by_y;
     }
 
+    @Step("Swipe element to the left (works only for iOS and Android)")
     public void swipeElementToLeft(String locator, String error_message) {
         if (driver instanceof AppiumDriver) {
             WebElement element = waitForElementPresent(
@@ -190,6 +210,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Get amount of elements")
     public int getAmountElements(String locator) {
         By by = this.getLocatorByString(locator);
         List elements = driver.findElements(by);
@@ -200,6 +221,7 @@ public class MainPageObject {
         return getAmountElements(locator) > 0;
     }
 
+    @Step("Click on element")
     public void tryClickElementsWithFewAttempts(String locator, String error_message, int amount_of_attempts) {
         int current_attempts = 0;
         boolean needMoreAttempts = true;
@@ -216,6 +238,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Chech element not present")
     public void assertElementNotPresent(String locator, String error_message) {
         int amountOfElements = getAmountElements(locator);
         if (amountOfElements > 0) {
@@ -224,6 +247,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Check element is present")
     public void assertElementPresent(String locator, String error_message) {
         int amountOfElements = getAmountElements(locator);
         if (amountOfElements == 0) {
@@ -232,6 +256,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Wait for element and get attribute")
     public String waitForElementAndGetAttribute(String locator, String attribute, String error_message, long timeoutInSeconds) {
         WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         return element.getAttribute(attribute);
@@ -255,6 +280,7 @@ public class MainPageObject {
         }
     }
 
+    @Step("Take screenshot")
     public String takeScreenshot(String name) {
         TakesScreenshot ts = (TakesScreenshot) this.driver;
         File source = ts.getScreenshotAs(OutputType.FILE);

@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.*;
@@ -10,6 +12,7 @@ import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Epic("Tests for saved list")
 public class MyListsTest extends CoreTestCase {
 
     private final static String name_of_folder = "Learning programming";
@@ -17,6 +20,11 @@ public class MyListsTest extends CoreTestCase {
     private final static String password = "!qazxsw@";
 
     @Test
+    @Features(value = {@Feature(value = "Search"),@Feature(value = "Article"), @Feature(value = "Saved List")})
+    @DisplayName("Save article to my list")
+    @Description("We add article to saved list and delete it")
+    @Step("Starting test testSaveFirstArticleToMyList")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testSaveFirstArticleToMyList() {
         SearchPageObject searchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);

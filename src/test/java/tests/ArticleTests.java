@@ -29,7 +29,7 @@ public class ArticleTests extends CoreTestCase {
         articlePageObject.waitForTitleElement();
         String article_title = articlePageObject.getArticleTitle();
 
-        //articlePageObject.takeScreenshot("article_page");
+        articlePageObject.takeScreenshot("article_page");
         Assert.assertEquals(
                 "We see unexpected title!",
                 "Java (programming language)",
